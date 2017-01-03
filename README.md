@@ -55,9 +55,7 @@ Put the require statement in your `composer.json` file and run `composer install
 ```json
 {
     "require": {
-        ...
         "maciejczyzewski/bottomline": "*"
-        ...
     }
 }
 ```
@@ -80,6 +78,13 @@ require 'bottomline/bottomline.php';
 ```php
 __::append([1, 2, 3], 4);
 // >> [1, 2, 3, 4]
+```
+
+##### [__::chunk](src/__/arrays/chunk.php)
+Creates an array of elements split into groups the length of size. If an array can't be split evenly, the final chunk will be the remaining elements.
+```php
+__::chunk([1, 2, 3, 4, 5], 3);
+// >> [[1, 2, 3], [4, 5]]
 ```
 
 ##### [__::compact](src/__/arrays/compact.php)
@@ -136,6 +141,13 @@ __::repeat('foo', 3);
 
 ### Collections
 
+##### [__::ease](src/__/collections/ease.php)
+Flattens a complex collection by mapping each ending leafs value to a key consisting of all previous indexes.
+```php
+__::ease(['foo' => ['bar' => 'ter'], 'baz' => ['b', 'z']]);
+// >> '['foo.bar' => 'ter', 'baz.0' => 'b', , 'baz.1' => 'z']'
+```
+
 ##### [__::filter](src/__/collections/filter.php)
 Returns the values in the collection that pass the truth test.
 ```php
@@ -158,9 +170,17 @@ __::first([1, 2, 3, 4, 5], 2);
 ```
 
 ##### [__::get](src/__/collections/get.php)
+Get item of an array by index, aceepting nested index
 ```php
 __::get(['foo' => ['bar' => 'ter']], 'foo.bar');
 // >> 'ter'
+```
+
+##### [__::hasKeys](src/__/collections/hasKeys.php)
+Returns if $input contains all requested $keys. If $strict is true it also checks if $input exclusively contains the given $keys.
+```php
+__::hasKeys(['foo' => 'bar', 'foz' => 'baz'], ['foo', 'foz']);
+// >> true
 ```
 
 ##### [__::last](src/__/collections/last.php)
@@ -203,6 +223,20 @@ $a = [
 
 __::pluck($a, 'foo');
 // >> ['bar', 'bar2']
+```
+
+##### [__::set](src/__/collections/set.php)
+Set item of an array by index to given value, accepting nested index
+```php
+__::set(['foo' => ['bar' => 'ter']], 'foo.baz.ber', 'fer');
+// >> ['foo' => ['bar' => 'ter', 'baz' => ['ber' => 'fer']]]
+```
+
+##### [__::unease](src/__/collections/unease.php)
+Builds a multidimensional collection out of a hash map using the key as indicator where to put the value.
+```php
+__::unease(['foo.bar' => 'ter', 'baz.0' => 'b', , 'baz.1' => 'z']);
+// >> ['foo' => ['bar' => 'ter'], 'baz' => ['b', 'z']]
 ```
 
 ##### [__::where](src/__/collections/where.php)
@@ -298,3 +332,4 @@ See LICENSE file in this repository.
 
 * Brandtley McMinn ([@bmcminn](https://github.com/bmcminn))
 * Ivan Ternovtsiy ([@diaborn19](https://github.com/diaborn19))
+* Tobias Seipke ([@nullpunkt](https://github.com/nullpunkt))
